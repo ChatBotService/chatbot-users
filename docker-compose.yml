@@ -1,0 +1,13 @@
+version: "2"
+
+services:
+  chatbot-service:
+    image: jurebevc/chatbot-users
+    container_name: chatbot-users
+    build: .
+    volumes:
+      - .:/usr/src/app
+    ports:
+      - 8081:8081
+    environment:
+      - DB_PATH=mysql+pymysql://sql7377269:MutA4e46L1@sql7.freemysqlhosting.net:3306/sql7377269
