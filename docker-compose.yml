@@ -1,5 +1,10 @@
 version: "2"
 
+networks:
+  default:
+    external:
+      name: chatbot
+
 services:
   chatbot-service:
     image: jurebevc/chatbot-users
@@ -10,4 +15,5 @@ services:
     ports:
       - 8081:8081
     environment:
-      - DB_PATH=mysql+pymysql://sql7377269:MutA4e46L1@sql7.freemysqlhosting.net:3306/sql7377269
+      - DB_PATH=mysql+pymysql://root:123@db:3306/chatbot
+      #- DB_PATH=mysql+pymysql://sql7377269:MutA4e46L1@sql7.freemysqlhosting.net:3306/sql7377269
