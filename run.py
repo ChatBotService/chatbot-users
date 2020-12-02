@@ -37,11 +37,11 @@ db.init_app(app)
 ma.init_app(app)
 
 print("Initializing database...", flush=True)
-with app.app_context():
-    db.drop_all()
-    db.create_all()
-    from models import models
-    models.init_db()
+# with app.app_context():
+#     db.drop_all()
+#     db.create_all()
+#     from models import models
+#     models.init_db()
 
 print("Database initialized", flush=True)
 
