@@ -10,30 +10,18 @@ spec:
   template:
     metadata:
       labels:
-        apps: chatbot-users
+        app: chatbot-users
     spec:
       containers:
-        - image: jurebevc/chatbot-users:1.0.0-2.1
+        - image: jurebevc/chatbot-users:1.0.0-3.1
           name: chatbot-users
           env:
             - name: DB_PATH
               valueFrom:
                 secretKeyRef:
-                  name: db-pass
-      ports:
-        - containerPort: 8081
-          name: server
-          protocol: TCP
-
-apiVersion: v1
-kind: Service
-metadata:
-  name: chatbot-users
-spec:
-  type: LoadBalancer
-  ports:
-    - port: 8081
-      protocol: TCP
-      targetPort: server
-  selector:
-    app: chatbot-users
+                  name: db-path
+                  key: db-path
+          ports:
+            - containerPort: 8081
+              name: server
+              protocol: TCP
