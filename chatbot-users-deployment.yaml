@@ -13,7 +13,7 @@ spec:
         app: chatbot-users
     spec:
       containers:
-        - image: jurebevc/chatbot-users:1.0.0-3.1
+        - image: jurebevc/chatbot-users:1.0.0-5.1
           name: chatbot-users
           env:
             - name: DB_PATH

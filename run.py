@@ -9,13 +9,17 @@ from models.models import *
 
 # APIs
 from api.users_api import UsersAPI
+from prometheus_flask_exporter import PrometheusMetrics
 
 import os
+import requests
 
 print("Running...", flush=True)
 
 app = Flask(__name__)
+
 api = Api(app)
+metrics = PrometheusMetrics(app)
 app.config["JSONIFY_PRETTYPRINT_REGULAR"] = False
 app.config["DEBUG"] = True
 
@@ -23,6 +27,7 @@ app.config["DEBUG"] = True
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 db_env = os.environ.get("DB_PATH")
+remote_config_path = os.environ.get("REMOTE_CONFIG_PATH")
 print(db_env)
 db_uri = db_env
 print("Database uri: ", flush=True)
@@ -60,6 +65,17 @@ info_data = {
 @app.route('/info', methods=['GET'])
 def info():
     return jsonify(info_data)
+
+@app.route('/config_test', methods=['GET'])
+def config_test():
+    try:
+        resp = requests.get(remote_config_path + "/test")
+        if resp.ok:
+            app.config["CONFIG_TEST"] = resp.content.decode('utf-8')
+    except:
+        print("Remote config not available.")
+    
+    return jsonify({"Config value" : str(app.config.get("CONFIG_TEST"))})
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0",port=8081, debug=True, use_reloader=False)
